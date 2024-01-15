@@ -1,10 +1,12 @@
 import React from 'react'
+import Routes from './pages/routes/Routes'
+import { Router } from 'react-router-dom/cjs/react-router-dom'
 
 const App = () => {
   return (
-    <React.Fragment>
-      <p className="text-3xl">Hi</p>
-    </React.Fragment>
+    <Router>
+      <Routes />
+    </Router>
   )
 }
 
