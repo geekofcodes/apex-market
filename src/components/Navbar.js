@@ -1,6 +1,7 @@
+// components/Navbar.js
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { FaBars, FaTimes, FaSearch } from 'react-icons/fa';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -12,9 +13,25 @@ const Navbar = () => {
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-white text-lg font-bold">
-          ApexMarket
-        </Link>
+        <div className="flex items-center">
+          <Link to="/" className="text-white text-lg font-bold">
+            ApexMarket
+          </Link>
+        </div>
+
+        {/* Search Bar */}
+        <div className="flex items-center justify-center w-1/2 md:w-1/3 ml-4 max-w-xs">
+          <div className="relative w-full">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="py-1 px-2 w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 transition duration-300"
+            />
+            <div className="absolute top-0 right-0 h-full flex items-center pr-2 text-gray-500">
+              <FaSearch />
+            </div>
+          </div>
+        </div>
 
         <div className="hidden md:flex space-x-4">
           <Link to="/" className="text-white">
@@ -45,7 +62,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-14 left-0 right-0 bg-gray-800">
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-gray-800">
             <div className="flex flex-col space-y-4 p-4">
               <Link to="/" className="text-white">
                 Home
