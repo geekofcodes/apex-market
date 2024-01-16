@@ -6,11 +6,10 @@ import SignUp from '../authentication/Signup'
 import Navbar from '../../components/Navbar'
 
 const Routes = () => {
-  const isLoggedIn = true;
 
   return (
     <BrowserRouter>
-      <Navbar isLoggedIn={isLoggedIn} />
+      <Navbar  />
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/login" exact component={Login} />
