@@ -6,7 +6,9 @@ const Home = () => {
     <div>
       <header
         className="bg-cover bg-center h-screen text-white flex items-center"
-        style={{ backgroundImage: `url('https://via.placeholder.com/1920x1080')` }}
+        style={{ 
+          backgroundImage: `url('https://via.placeholder.com/1920x1080')` 
+        }}
       >
         <div className="text-center mx-auto">
           <h1 className="text-5xl font-extrabold mb-4">Discover Unique Products</h1>

@@ -1,14 +1,11 @@
 import React from 'react'
-import { BrowserRouter, Route, Router, Switch } from 'react-router-dom/cjs/react-router-dom'
-import Home from './pages/Home'
+import Routes from './pages/routes/Routes'
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" exact element={<Home/>} />
-      </Switch>
-    </BrowserRouter>
+    <React.Fragment>
+      <Routes />
+    </React.Fragment>
   )
 }
 
