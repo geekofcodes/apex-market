@@ -23,7 +23,7 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          <div>
+          <div className='sm:flex-col sm:items-center'>
             <h3 className="text-2xl font-bold mb-2">Contact Us</h3>
             <p className="text-gray-300">Email: contact@apexmarket.com</p>
             <p className="text-gray-300">Phone: +1 123-456-7890</p>
