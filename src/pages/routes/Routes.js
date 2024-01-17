@@ -4,6 +4,7 @@ import Home from '../Home'
 import Login from '../authentication/Login'
 import SignUp from '../authentication/Signup'
 import Navbar from '../../components/Navbar'
+import Footer from '../../components/Footer'
 
 const Routes = () => {
 
@@ -15,6 +16,7 @@ const Routes = () => {
         <Route path="/login" exact component={Login} />
         <Route path="/signup" exact component={SignUp} />
       </Switch>
+      <Footer />
     </BrowserRouter>
   )
 }
