@@ -30,7 +30,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-8 text-center">
-          <p className="text-gray-300">&copy; 2024 ApexMarket. All rights reserved.</p>
+          <p className="text-gray-300">&copy; 2024 ApexMarket. All rights reserved. Developed by GeekofCodes</p>
         </div>
       </div>
     </footer>
