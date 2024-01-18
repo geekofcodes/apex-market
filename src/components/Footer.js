@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import MadeWithLove from 'react-made-with-love';
 
 const Footer = () => {
 
@@ -33,7 +34,8 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-8 text-center">
-          <p className="text-gray-300">&copy; {currentYear} ApexMarket. All rights reserved. Developed by GeekofCodes</p>
+          <p className="text-gray-300">&copy; {currentYear} ApexMarket. All rights reserved.</p>
+          <p className="text-sm mt-2 lg:mt-0"><MadeWithLove by="Geek of Codes" emoji /></p>
         </div>
       </div>
     </footer>
