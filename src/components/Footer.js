@@ -13,16 +13,16 @@ const Footer = () => {
           <div className="mb-4 md:mb-0 sm:flex-col sm:items-center">
             <h3 className="text-2xl font-bold mb-2">Connect with us</h3>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-300 hover:text-white">
+              <a href="www.facebook.com" className="text-gray-300 hover:text-white">
                 <FaFacebook />
               </a>
-              <a href="#" className="text-gray-300 hover:text-white">
+              <a href="www.twitter.com" className="text-gray-300 hover:text-white">
                 <FaTwitter />
               </a>
-              <a href="#" className="text-gray-300 hover:text-white">
+              <a href="www.instagram.com" className="text-gray-300 hover:text-white">
                 <FaInstagram />
               </a>
-              <a href="#" className="text-gray-300 hover:text-white">
+              <a href="www.linkedin.com" className="text-gray-300 hover:text-white">
                 <FaLinkedin />
               </a>
             </div>
