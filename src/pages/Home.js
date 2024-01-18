@@ -56,6 +56,7 @@ const Home = () => {
                 </Button>
               </CardContent>
             </Card>
+
           </Grid>
           {/* Repeat the above card for each featured product */}
         </Grid>
