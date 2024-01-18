@@ -2,6 +2,9 @@ import React from 'react';
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 
 const Footer = () => {
+
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="bg-gray-800 text-white py-8">
       <div className="container mx-auto p-4">
@@ -30,7 +33,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-8 text-center">
-          <p className="text-gray-300">&copy; 2024 ApexMarket. All rights reserved. Developed by GeekofCodes</p>
+          <p className="text-gray-300">&copy; {currentYear} ApexMarket. All rights reserved. Developed by GeekofCodes</p>
         </div>
       </div>
     </footer>
