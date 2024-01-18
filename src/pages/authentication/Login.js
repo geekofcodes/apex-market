@@ -23,7 +23,7 @@ const Login = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <div className="mt-8">
+      <div className="container mt-8">
         <Typography variant="h4" component="h2" className="text-2xl font-bold mb-4">
           Login
         </Typography>
