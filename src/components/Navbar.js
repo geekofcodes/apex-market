@@ -74,7 +74,7 @@ const Navbar = () => {
                 Cart
               </Link>
               <Link to="/profile" className="text-white">
-                User Profile
+                Profile
               </Link>
               <Link to="/login" className="text-white">
                 Login
