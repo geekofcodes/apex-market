@@ -1,16 +1,20 @@
 import React from 'react';
+import { Card, Button } from 'antd';
 
 const FeaturedProducts = ({ products }) => {
     return (
         <div className="featured-products-container">
             {products.map((product) => (
-                <div key={product.id} className="featured-product-card">
-                    <img src={product.imageUrl} alt={product.name} />
-                    <h3>{product.name}</h3>
-                    <p>{product.description}</p>
-                    <span>${product.price}</span>
-                    <button>Add to Cart</button>
-                </div>
+                <Card 
+                    key={product.id} 
+                    className="featured-product-card" 
+                    hoverable 
+                    cover={<img alt={product.name} src={product.imageUrl} />}
+                >
+                    <Card.Meta title={product.name} description={product.description} />
+                    <p>₹{product.price}</p>
+                    <Button type="primary">Add to Cart</Button>
+                </Card>
             ))}
         </div>
     );

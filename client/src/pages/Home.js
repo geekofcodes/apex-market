@@ -8,12 +8,12 @@ const { Title, Paragraph } = Typography;
 const Home = () => {
     const [featuredProducts, setFeaturedProducts] = useState([]);
 
-    // useEffect(() => {
-    //     // Fetch featured products from the server
-    //     productService.getFeaturedProducts()
-    //         .then((data) => setFeaturedProducts(data))
-    //         .catch((error) => console.error('Error fetching featured products:', error));
-    // }, []);
+    useEffect(() => {
+        // Fetch products from the server
+        productService.getProducts()
+            .then((data) => setFeaturedProducts(data))
+            .catch((error) => console.error('Error fetching products:', error));
+    }, []);
 
     return (
         <div className="container mx-auto mt-6">
@@ -26,7 +26,7 @@ const Home = () => {
 
             <section className="mt-8">
                 <Title level={2}>Featured Products</Title>
-                {/* <FeaturedProducts products={featuredProducts} /> */}
+                <FeaturedProducts products={featuredProducts} />
             </section>
 
             <section className="mt-8">

@@ -1,7 +1,7 @@
-// app.js
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const cors = require('cors'); // Import the cors middleware
 
 dotenv.config();
 const app = express();
@@ -14,6 +14,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 
 // Middleware
 app.use(express.json());
+app.use(cors()); // Enable CORS for all routes
 
 // Routes
 const authRoutes = require('./routes/authRoutes');
