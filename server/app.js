@@ -16,10 +16,10 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 app.use(express.json());
 
 // Routes
-const authRoutes = require('./server/routes/authRoutes');
-const productRoutes = require('./server/routes/productRoutes');
-const cartRoutes = require('./server/routes/cartRoutes');
-const userRoutes = require('./server/routes/userRoutes');
+const authRoutes = require('./routes/authRoutes');
+const productRoutes = require('./routes/productRoutes');
+const cartRoutes = require('./routes/cartRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
