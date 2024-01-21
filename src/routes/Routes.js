@@ -1,10 +1,10 @@
 import React from 'react'
 import { Switch, Route, BrowserRouter } from 'react-router-dom/cjs/react-router-dom'
-import Home from '../Home'
-import Login from '../authentication/Login'
-import SignUp from '../authentication/Signup'
-import Navbar from '../../components/Navbar'
-import Footer from '../../components/Footer'
+import Home from '../pages/Home'
+import Login from '../pages/authentication/Login'
+import SignUp from '../pages/authentication/Signup'
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 
 const Routes = () => {
 
