@@ -1,7 +1,7 @@
 const productService = {
     getProducts: async () => {
         try {
-            const response = await fetch('/api/products');
+            const response = await fetch('http://localhost:7000/api/products');
             if (!response.ok) {
                 throw new Error('Failed to fetch products');
             }
