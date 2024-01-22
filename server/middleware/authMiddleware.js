@@ -5,22 +5,20 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 module.exports = {
-    authenticateToken: (req, res, next) => {
-        const token = req.header('Authorization');
+  authenticateToken: async (req, res, next) => {
+    const token = req.header('Authorization');
 
-        if (!token) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
+    if (!token) {
+      return res.status(401).json({ message: 'Unauthorized: Token not provided' });
+    }
 
-        jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-            if (err) {
-                return res.status(403).json({ message: 'Forbidden' });
-            }
-
-            req.user = user;
-            next();
-        });
-    },
-
-    // Add other authentication middleware methods as needed
+    try {
+      const user = await jwt.verify(token, process.env.JWT_SECRET);
+      req.user = user;
+      next();
+    } catch (err) {
+      return res.status(403).json({ message: 'Forbidden: Invalid token' });
+    }
+  },
+  // Add other authentication middleware methods as needed
 };

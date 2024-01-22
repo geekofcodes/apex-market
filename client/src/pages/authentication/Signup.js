@@ -1,12 +1,12 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
-import { TextField, Button, Typography, Link, Grid, Card, CardContent, InputAdornment } from '@mui/material';
+import { TextField, Button, Typography, Link, Grid, Card, CardContent, InputAdornment, Tooltip } from '@mui/material';
 import * as Yup from 'yup';
 import authService from '../../services/authService';
+import InfoIcon from '@mui/icons-material/Info';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
-import PhoneIcon from '@mui/icons-material/Phone';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 
 const SignupSchema = Yup.object().shape({
@@ -15,7 +15,6 @@ const SignupSchema = Yup.object().shape({
     /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     'Invalid email format'
   ).required('Email is required'),  
-  phoneNumber: Yup.string().matches(/^[0-9]{10}$/, 'Invalid phone number').required('Phone number is required'),
   password: Yup.string()
     .matches(
       /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,}$/,
@@ -32,7 +31,6 @@ const Signup = () => {
   const initialValues = {
     name: '',
     email: '',
-    phoneNumber: '',
     password: '',
     confirmPassword: '',
   };
@@ -96,29 +94,6 @@ const Signup = () => {
                   <Grid item xs={12} sm={6}>
                     <Field
                       as={TextField}
-                      name="phoneNumber"
-                      label="Phone Number"
-                      fullWidth
-                      variant="outlined"
-                      size="small"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <PhoneIcon />
-                          </InputAdornment>
-                        ),
-                        inputMode: 'numeric',
-                      }}
-                      inputProps={{
-                        type: 'tel',
-                        pattern: '[0-9]*', // Allow only numeric input
-                        maxLength: 10, // Limit the length to 10 digits
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Field
-                      as={TextField}
                       name="password"
                       label="Password"
                       type="password"
@@ -130,6 +105,13 @@ const Signup = () => {
                           <InputAdornment position="start">
                             <LockIcon />
                           </InputAdornment>
+                        ),
+                        endAdornment: (
+                          <Tooltip title="Password must contain 1 capital letter, 1 number, 1 special character, and be at least 6 characters long">
+                            <InputAdornment position="end">
+                              <InfoIcon />
+                            </InputAdornment>
+                          </Tooltip>
                         ),
                       }}
                     />
