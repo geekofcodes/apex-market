@@ -16,7 +16,7 @@ const Home = () => {
     }, []);
 
     return (
-        <div className="container mx-auto mt-6">
+        <div className="container mx-auto m-6">
             <section className="text-center">
                 <Title level={1}>Welcome to Our E-Commerce Store</Title>
                 <Paragraph>
@@ -24,19 +24,19 @@ const Home = () => {
                 </Paragraph>
             </section>
 
-            <section className="mt-8">
+            <section className="m-8">
                 <Title level={2}>Featured Products</Title>
                 <FeaturedProducts products={featuredProducts} />
             </section>
 
-            <section className="mt-8">
+            <section className="m-8">
                 <Title level={2}>Special Offers</Title>
                 <Paragraph>
                     Check out our special offers and save big on your favorite items.
                 </Paragraph>
             </section>
 
-            <section className="mt-8">
+            <section className="m-8">
                 <Title level={2}>Popular Categories</Title>
                 <Paragraph>
                     Explore our popular categories to find what you're looking for.
