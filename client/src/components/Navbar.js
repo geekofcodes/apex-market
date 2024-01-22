@@ -46,7 +46,7 @@ const Navbar = () => {
           <Link to="/profile" className="text-white">
             Profile
           </Link>
-          <Link to="/login" className="text-white">
+          <Link to="/auth/login" className="text-white">
             Login
           </Link>
         </div>

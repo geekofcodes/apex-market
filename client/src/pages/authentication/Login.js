@@ -1,68 +1,75 @@
-// components/Login.js
+// Login.js (client/src/pages/authentication/Login.js)
 import React, { useState } from 'react';
-import { Button, TextField, Container, Typography } from '@mui/material';
+import { Form, Input, Typography, Card } from 'antd';
+import { Button } from '@mui/material'
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import authService from '../../services/authService';
+
+const { Title } = Typography;
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+  const [form] = Form.useForm();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleSubmit = async (values) => {
+    try {
+      // Call the login function from authService
+      const response = await authService.login(values);
+
+      // Handle successful login
+      console.log('Login successful', response);
+      // You can redirect the user or perform other actions as needed
+
+    } catch (error) {
+      // Handle login failure
+      console.error('Login failed', error);
+      // You might want to display an error message to the user
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // You can add logic to handle form submission (e.g., send data to a server)
-    console.log('Form submitted:', formData);
+  const containerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100vh', // Adjust if needed
+  };
+
+  const cardStyle = {
+    width: '300px', // Adjust the width as needed
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <div className="container mt-8">
-        <Typography variant="h4" component="h2" className="text-2xl font-bold mb-4">
-          Login
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
+    <div style={containerStyle}>
+      <Card className='color:' style={cardStyle} title={<Title level={2}>Login</Title>}>
+        <Form form={form} onFinish={handleSubmit} style={{ width: '100%' }}>
+          <Form.Item
             name="email"
-            type="email"
-            autoFocus
-            onChange={handleChange}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="password"
-            label="Password"
-            name="password"
-            type="password"
-            onChange={handleChange}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className="mt-4"
+            rules={[
+              { required: true, message: 'Please enter your email!' },
+              { type: 'email', message: 'Please enter a valid email address!' },
+            ]}
           >
-            Login
-          </Button>
-        </form>
-      </div>
-    </Container>
+            <Input
+              prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="Email"
+            />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[{ required: true, message: 'Please enter your password!' }]}
+          >
+            <Input.Password
+              prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="Password"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button variant="contained" htmlType="submit" style={{ width: '100%', display: 'block' }}>
+              Log in
+            </Button>
+          </Form.Item>
+        </Form>
+      </Card>
+    </div>
   );
 };
 

@@ -1,90 +1,57 @@
+// Signup.js (client/src/pages/authentication/Signup.js)
 import React, { useState } from 'react';
-import { Button, TextField, Container, Typography } from '@mui/material';
+import { Form, Input, Button, message } from 'antd';
+import authService from '../../services/authService';
 
-const SignUp = () => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-  });
+const Signup = () => {
+  const [form] = Form.useForm();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleSubmit = async (values) => {
+    try {
+      // Call the register function from authService
+      const response = await authService.register(values);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // You can add logic to handle form submission (e.g., send data to a server)
-    console.log('Form submitted:', formData);
+      // Handle successful registration
+      console.log('Registration successful', response);
+      // You can redirect the user or perform other actions as needed
+
+    } catch (error) {
+      // Handle registration failure
+      console.error('Registration failed', error);
+      message.error('Registration failed. Please try again.');
+    }
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <div className="mt-8">
-        <Typography variant="h4" component="h2" className="text-2xl font-bold mb-4">
-          Sign Up
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="firstName"
-            label="First Name"
-            name="firstName"
-            autoFocus
-            onChange={handleChange}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="lastName"
-            label="Last Name"
-            name="lastName"
-            onChange={handleChange}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            type="email"
-            onChange={handleChange}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="password"
-            label="Password"
-            name="password"
-            type="password"
-            onChange={handleChange}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className="mt-4"
-          >
-            Sign Up
-          </Button>
-        </form>
-      </div>
-    </Container>
+    <Form form={form} onFinish={handleSubmit} layout="vertical">
+      <Form.Item
+        label="Username"
+        name="username"
+        rules={[{ required: true, message: 'Please enter your username!' }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Email"
+        name="email"
+        rules={[{ required: true, message: 'Please enter your email!' }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[{ required: true, message: 'Please enter your password!' }]}
+      >
+        <Input.Password />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Register
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
 
-export default SignUp;
+export default Signup;

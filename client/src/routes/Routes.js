@@ -1,23 +1,23 @@
 import React from 'react'
-import { Switch, Route, BrowserRouter } from 'react-router-dom/cjs/react-router-dom'
+import { Switch, Route, HashRouter } from 'react-router-dom/cjs/react-router-dom'
 import Home from '../pages/Home'
-import Login from '../pages/authentication/Login'
-import SignUp from '../pages/authentication/Signup'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import Login from '../pages/authentication/Login'
+import Signup from '../pages/authentication/Signup'
 
 const Routes = () => {
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Navbar  />
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/login" exact component={Login} />
-        <Route path="/signup" exact component={SignUp} />
+        <Route path="/auth/login" exact component={Login} />
+        <Route path="/auth/signup" exact component={Signup} />
       </Switch>
       <Footer />
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
