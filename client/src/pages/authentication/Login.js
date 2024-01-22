@@ -1,75 +1,115 @@
-// Login.js (client/src/pages/authentication/Login.js)
 import React, { useState } from 'react';
-import { Form, Input, Typography, Card } from 'antd';
-import { Button } from '@mui/material'
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Formik, Form, Field } from 'formik';
+import { TextField, Button, Typography, Link, Grid, Card, CardContent, InputAdornment, Snackbar, Alert } from '@mui/material';
+import * as Yup from 'yup';
 import authService from '../../services/authService';
+import EmailIcon from '@mui/icons-material/Email';
+import LockIcon from '@mui/icons-material/Lock';
 
-const { Title } = Typography;
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email format').required('Email is required'),
+  password: Yup.string().required('Password is required'),
+});
 
 const Login = () => {
-  const [form] = Form.useForm();
+  const initialValues = {
+    email: '',
+    password: '',
+  };
 
-  const handleSubmit = async (values) => {
+  const [alertOpen, setAlertOpen] = useState(false);
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlertOpen(false);
+  };
+
+  const handleSubmit = async (values, { resetForm, setSubmitting }) => {
+    console.log('Submitting form with values:', values);
     try {
-      // Call the login function from authService
       const response = await authService.login(values);
-
-      // Handle successful login
-      console.log('Login successful', response);
-      // You can redirect the user or perform other actions as needed
-
+      console.log(response);
+      // Handle successful login, e.g., redirect to dashboard
     } catch (error) {
-      // Handle login failure
-      console.error('Login failed', error);
-      // You might want to display an error message to the user
+      console.error(error.message);
+      // Show alert on validation error
+      setAlertOpen(true);
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  const containerStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh', // Adjust if needed
-  };
-
-  const cardStyle = {
-    width: '300px', // Adjust the width as needed
-  };
-
   return (
-    <div style={containerStyle}>
-      <Card className='color:' style={cardStyle} title={<Title level={2}>Login</Title>}>
-        <Form form={form} onFinish={handleSubmit} style={{ width: '100%' }}>
-          <Form.Item
-            name="email"
-            rules={[
-              { required: true, message: 'Please enter your email!' },
-              { type: 'email', message: 'Please enter a valid email address!' },
-            ]}
-          >
-            <Input
-              prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder="Email"
-            />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: 'Please enter your password!' }]}
-          >
-            <Input.Password
-              prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder="Password"
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button variant="contained" htmlType="submit" style={{ width: '100%', display: 'block' }}>
-              Log in
-            </Button>
-          </Form.Item>
-        </Form>
-      </Card>
-    </div>
+    <Grid container justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
+      <Grid item xs={12} sm={10} md={8} lg={6} xl={4}>
+        <Card elevation={3} style={{ padding: '20px' }}>
+          <CardContent>
+            <Typography variant="h5" align="center" gutterBottom>
+              Login
+            </Typography>
+            <Formik initialValues={initialValues} validationSchema={LoginSchema} onSubmit={handleSubmit}>
+              <Form>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <Field
+                      as={TextField}
+                      name="email"
+                      label="Email"
+                      fullWidth
+                      variant="outlined"
+                      size="small"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <EmailIcon />
+                          </InputAdornment>
+                        ),
+                        inputMode: 'email',
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Field
+                      as={TextField}
+                      name="password"
+                      label="Password"
+                      type="password"
+                      fullWidth
+                      variant="outlined"
+                      size="small"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <LockIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+
+                <Button type='submit' variant="contained" color="primary" fullWidth style={{ marginTop: '16px' }}>
+                  Login
+                </Button>
+
+                <Typography variant="body2" style={{ marginTop: '16px' }}>
+                  Don't have an account? <Link href="#/auth/signup">Sign up</Link>
+                </Typography>
+              </Form>
+            </Formik>
+
+            {/* Alert for empty fields */}
+            <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleAlertClose}>
+              <Alert onClose={handleAlertClose} severity="error" sx={{ width: '100%' }} variant="filled">
+                Please fill in all the required fields.
+              </Alert>
+            </Snackbar>
+          </CardContent>
+        </Card>
+      </Grid>
+    </Grid>
   );
 };
 
