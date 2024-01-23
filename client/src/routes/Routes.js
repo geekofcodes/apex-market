@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Switch, Route, HashRouter } from 'react-router-dom/cjs/react-router-dom'
 import Home from '../pages/Home'
 import Navbar from '../components/Navbar'
@@ -7,13 +7,37 @@ import Login from '../pages/authentication/Login'
 import Signup from '../pages/authentication/Signup'
 
 const Routes = () => {
+  const [isLoggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check session storage for login state on component mount
+    const storedLoggedIn = sessionStorage.getItem('isLoggedIn');
+    if (storedLoggedIn === 'true') {
+      setLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogin = () => {
+    // Save login state in session storage
+    sessionStorage.setItem('isLoggedIn', 'true');
+    setLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    // Remove login state from session storage
+    sessionStorage.removeItem('isLoggedIn');
+    setLoggedIn(false);
+  };
 
   return (
     <HashRouter>
-      <Navbar  />
+      <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/auth/login" exact component={Login} />
+        <Route
+          path="/auth/login"
+          render={(props) => <Login {...props} onLogin={handleLogin} />}
+        />
         <Route path="/auth/signup" exact component={Signup} />
       </Switch>
       <Footer />

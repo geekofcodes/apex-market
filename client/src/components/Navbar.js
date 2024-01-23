@@ -1,10 +1,12 @@
 // components/Navbar.js
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBars, FaTimes, FaSearch } from 'react-icons/fa';
+import { FaBars, FaTimes, FaSearch, FaUser } from 'react-icons/fa';
+// import { useAuth } from '../contexts/AuthContext';
 
-const Navbar = () => {
+const Navbar = ({ isLoggedIn, onLogout }) => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // const { isLoggedIn, logout } = useAuth();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
@@ -43,12 +45,21 @@ const Navbar = () => {
           <Link to="/cart" className="text-white">
             Cart
           </Link>
-          <Link to="/profile" className="text-white">
-            Profile
-          </Link>
-          <Link to="/auth/login" className="text-white">
-            Login
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <Link to="/profile" className="text-white">
+                Profile
+              </Link>
+              <button className="text-white" onClick={onLogout}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link to="/auth/login" className="text-white">
+              Login
+            </Link>
+          )}
+          
         </div>
 
         {/* Mobile Menu Icon */}
@@ -73,12 +84,21 @@ const Navbar = () => {
               <Link to="/cart" className="text-white">
                 Cart
               </Link>
-              <Link to="/profile" className="text-white">
-                Profile
-              </Link>
-              <Link to="/login" className="text-white">
-                Login
-              </Link>
+              {/* ... (existing links) */}
+              {isLoggedIn ? (
+                <>
+                  <Link to="/profile" className="text-white">
+                    Profile
+                  </Link>
+                  <button className="text-white" onClick={onLogout}>
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link to="/auth/login" className="text-white">
+                  Login
+                </Link>
+              )}
             </div>
           </div>
         )}

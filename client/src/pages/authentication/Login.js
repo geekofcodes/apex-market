@@ -1,39 +1,63 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import { TextField, Button, Typography, Link, Grid, Card, CardContent, InputAdornment, Snackbar, Alert } from '@mui/material';
 import * as Yup from 'yup';
 import authService from '../../services/authService';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
+// import { useAuth } from '../../contexts/AuthContext';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email format').required('Email is required'),
   password: Yup.string().required('Password is required'),
 });
 
-const Login = () => {
+const Login = ({ onLogin }) => {
+  // const { isLoggedIn, login } = useAuth();
   const initialValues = {
     email: '',
     password: '',
   };
 
   const [alertOpen, setAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertSeverity, setAlertSeverity] = useState('error');
+  const history = useHistory();
 
   const handleAlertClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
     setAlertOpen(false);
+    setAlertMessage(''); // Clear the alert message when the Snackbar is closed
+    setAlertSeverity('error'); // Reset alert severity to default
   };
 
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {
-    console.log('Submitting form with values:', values);
+    // console.log('Submitting form with values:', values);
     try {
       const response = await authService.login(values);
       console.log(response);
       // Handle successful login, e.g., redirect to dashboard
+      // Save login state in session storage
+      sessionStorage.setItem('isLoggedIn', 'true');
+      // Update the parent component (Route.js) about the successful login
+      onLogin();
+      setAlertSeverity('success');
+      setAlertMessage('Login successful');
+      setAlertOpen(true);
+      // login();
+      history.push('/'); // Redirect to home page after successful login
     } catch (error) {
       console.error(error.message);
+      // Check if the error is due to validation issues (e.g., wrong email or password)
+      if (error.message) {
+        setAlertMessage(error.message);
+      } else {
+        // Show generic alert for other errors
+        setAlertMessage('An error occurred. Please try again.');
+      }
       // Show alert on validation error
       setAlertOpen(true);
     } finally {
@@ -102,8 +126,8 @@ const Login = () => {
 
             {/* Alert for empty fields */}
             <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleAlertClose}>
-              <Alert onClose={handleAlertClose} severity="error" sx={{ width: '100%' }} variant="filled">
-                Please fill in all the required fields.
+              <Alert onClose={handleAlertClose} severity={alertSeverity} sx={{ width: '100%' }} variant="filled">
+                {alertMessage}
               </Alert>
             </Snackbar>
           </CardContent>

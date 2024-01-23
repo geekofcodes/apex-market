@@ -37,7 +37,7 @@ module.exports = {
 
             // If the user is not found, return an error
             if (!user) {
-                return res.status(401).json({ message: 'Invalid credentials' });
+                return res.status(401).json({ message: 'Invalid email' });
             }
 
             // Check if the provided password matches the stored hashed password
@@ -45,7 +45,7 @@ module.exports = {
 
             // If passwords don't match, return an error
             if (!passwordMatch) {
-                return res.status(401).json({ message: 'Invalid credentials' });
+                return res.status(401).json({ message: 'Invalid password' });
             }
 
             // Exclude password from the response
