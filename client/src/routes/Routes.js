@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Login from '../pages/authentication/Login'
 import Signup from '../pages/authentication/Signup'
+import UserProfile from '../pages/user/UserProfile'
 
 const Routes = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -39,6 +40,7 @@ const Routes = () => {
           render={(props) => <Login {...props} onLogin={handleLogin} />}
         />
         <Route path="/auth/signup" exact component={Signup} />
+        <Route path="/profile" exact component={UserProfile} />
       </Switch>
       <Footer />
     </HashRouter>
