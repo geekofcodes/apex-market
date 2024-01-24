@@ -1,21 +1,39 @@
-import React, { useState } from 'react';
+// UserProfile.js
+import React, { useState, useEffect } from 'react';
+import userService from '../../services/userService';
 
 const UserProfile = ({ user }) => {
   const [address, setAddress] = useState(user.address || '');
   const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber || '');
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleSave = () => {
-    // You can perform API calls or state updates to save the changes
-    // For simplicity, let's just log the updated values
-    console.log('Updated Address:', address);
-    console.log('Updated Phone Number:', phoneNumber);
+  const handleSave = async () => {
+    // If address or phoneNumber is not present, it's the first time update
+    const isFirstTimeUpdate = !user.address || !user.phoneNumber;
+    try {
+      await userService.updateUserDetails(user._id, { address, phoneNumber });
 
-    // If you're making an API call to update user data, you can handle success and error states accordingly
+      // If successful, you might want to update the user state or fetch the user again
+      console.log('Updated Address:', address);
+      console.log('Updated Phone Number:', phoneNumber);
+      // For simplicity, let's just log a success message
+      console.log('User details updated successfully');
+    } catch (error) {
+      // Handle errors, show a message, etc.
+      console.error('Error updating user details:', error);
+    }
 
     // Set isEditing to false after saving
     setIsEditing(false);
   };
+
+  useEffect(() => {
+    // Check if user details already include address and phoneNumber
+    if (!user.address || !user.phoneNumber) {
+      // If not, set isEditing to true to enable editing
+      setIsEditing(true);
+    }
+  }, [user]);
 
   return (
     <div>
