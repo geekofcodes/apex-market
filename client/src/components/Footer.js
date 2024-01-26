@@ -34,7 +34,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-8 text-center">
-          <p className="text-gray-300">&copy; {currentYear} ApexMarket. All rights reserved.</p>
+          <p className="text-gray-300">&copy; {currentYear} Apex Market. All rights reserved.</p>
           <p className="text-sm mt-2 lg:mt-0"><MadeWithLove by="Geek of Codes" emoji /></p>
         </div>
       </div>
