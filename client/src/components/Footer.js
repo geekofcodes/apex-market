@@ -11,7 +11,7 @@ const Footer = () => {
       <div className="container mx-auto p-4">
         <div className="flex flex-col md:flex-row items-center md:justify-between">
           <div className="mb-4 md:mb-0 sm:flex-col sm:items-center">
-            <h3 className="text-2xl font-bold mb-2">Connect with us</h3>
+            <h3 className="text-2xl font-bold mb-2">Say Hi</h3>
             <div className="flex space-x-4">
               <a href="www.facebook.com" className="text-gray-300 hover:text-white">
                 <FaFacebook />
