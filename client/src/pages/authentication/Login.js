@@ -14,7 +14,7 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().required('Password is required'),
 });
 
-const Login = ({ onLogin, setUserId }) => {
+const Login = ({ onLogin }) => {
   // const { isLoggedIn, login } = useAuth();
   const initialValues = {
     email: '',
@@ -52,8 +52,12 @@ const Login = ({ onLogin, setUserId }) => {
       const { user } = response;
       console.log(response);
       console.log(user._id)
+
       // Set userId in the parent component (Routes.js)
-      setUserId(user._id);
+      // setUserId(user._id);
+
+      // Save userId in sessionStorage
+      sessionStorage.setItem('userId', user._id);
       // Handle successful login, e.g., redirect to dashboard
       // Save login state in session storage
       sessionStorage.setItem('isLoggedIn', 'true');

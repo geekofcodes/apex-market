@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import productService from '../services/productService';
 import FeaturedProducts from '../components/FeaturedProducts';
+import ProductList from './product/ProductList';
 import { Row, Col, Typography } from 'antd';
 
 const { Title, Paragraph } = Typography;
 
-const Home = () => {
+const Home = ({ userId }) => {
     const [featuredProducts, setFeaturedProducts] = useState([]);
 
     useEffect(() => {
@@ -27,6 +28,11 @@ const Home = () => {
             <section className="m-8">
                 <Title level={2}>Featured Products</Title>
                 <FeaturedProducts products={featuredProducts} />
+            </section>
+
+            <section className="m-8">
+                <Title level={2}>All Products</Title>
+                <ProductList userId={userId} />
             </section>
 
             <section className="m-8">

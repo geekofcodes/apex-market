@@ -6,16 +6,20 @@ import Footer from '../components/Footer'
 import Login from '../pages/authentication/Login'
 import Signup from '../pages/authentication/Signup'
 import UserProfile from '../pages/user/UserProfile'
+import ProductList from '../pages/product/ProductList'
 
 const Routes = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    // Check session storage for login state on component mount
+    // Check session storage for login state and userId on component mount
     const storedLoggedIn = sessionStorage.getItem('isLoggedIn');
-    if (storedLoggedIn === 'true') {
+    const storedUserId = sessionStorage.getItem('userId');
+
+    if (storedLoggedIn === 'true' && storedUserId) {
       setLoggedIn(true);
+      setUserId(storedUserId);
     }
   }, []);
 
@@ -28,20 +32,28 @@ const Routes = () => {
   const handleLogout = () => {
     // Remove login state from session storage
     sessionStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('userId');
     setLoggedIn(false);
+    setUserId(null);
   };
 
   return (
     <HashRouter>
       <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} userId={userId} />
       <Switch>
-        <Route path="/" exact component={Home} />
+        <Route 
+          path="/" 
+          exact
+          render={(props) => <Home {...props} userId={userId} />} 
+          // component={Home} 
+        />
         <Route
           path="/auth/login"
-          render={(props) => <Login {...props} onLogin={handleLogin} setUserId={setUserId} />}
+          render={(props) => <Login {...props} onLogin={handleLogin} />}
         />
         <Route path="/auth/signup" exact component={Signup} />
         <Route path="/profile" exact component={UserProfile} />
+        <Route path="/products" exact render={(props) => <ProductList {...props} userId={userId} />} />
       </Switch>
       <Footer />
     </HashRouter>

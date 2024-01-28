@@ -45,16 +45,17 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row, } from 'antd';
 import ProductDetail from './ProductDetail';
-import productService from '../services/productService';
+import productService from '../../services/productService';
 
 const ProductList = ({ userId }) => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
+        console.log(userId)
         productService.getProducts()
             .then(data => setProducts(data))
             .catch(error => console.error('Error fetching products:', error));
-    }, []);
+    }, [userId]);
 
     return (
         <div>

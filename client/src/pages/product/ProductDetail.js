@@ -1,13 +1,14 @@
 // ProductDetail.js
 import React, { useState } from 'react';
 import { Card, Button, InputNumber } from 'antd';
-import cartService from '../services/cartService';
+import cartService from '../../services/cartService';
 
 const ProductDetail = ({ product, userId }) => {
   const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = async () => {
     try {
+        console.log('Adding to cart - userId:', userId);
       await cartService.addToCart(userId, product._id, quantity);
       console.log("clicked")
       // Fetch and log the updated cart count after adding to cart
@@ -31,6 +32,7 @@ const ProductDetail = ({ product, userId }) => {
           <>
             <p>{product.description}</p>
             <p>Price: ${product.price}</p>
+            {/* <p>Price: 55</p> */}
             <label>Quantity:</label>
             <InputNumber
               min={1}
