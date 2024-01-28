@@ -9,6 +9,7 @@ import UserProfile from '../pages/user/UserProfile'
 
 const Routes = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     // Check session storage for login state on component mount
@@ -32,12 +33,12 @@ const Routes = () => {
 
   return (
     <HashRouter>
-      <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+      <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} userId={userId} />
       <Switch>
         <Route path="/" exact component={Home} />
         <Route
           path="/auth/login"
-          render={(props) => <Login {...props} onLogin={handleLogin} />}
+          render={(props) => <Login {...props} onLogin={handleLogin} setUserId={setUserId} />}
         />
         <Route path="/auth/signup" exact component={Signup} />
         <Route path="/profile" exact component={UserProfile} />

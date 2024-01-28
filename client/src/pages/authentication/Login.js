@@ -14,7 +14,7 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().required('Password is required'),
 });
 
-const Login = ({ onLogin }) => {
+const Login = ({ onLogin, setUserId }) => {
   // const { isLoggedIn, login } = useAuth();
   const initialValues = {
     email: '',
@@ -35,16 +35,32 @@ const Login = ({ onLogin }) => {
     setAlertSeverity('error'); // Reset alert severity to default
   };
 
+  const fetchCartCount = async (userId) => {
+    try {
+      const cartCountResponse = await cartService.getCartCount(userId);
+      console.log('Cart Count after login:', cartCountResponse.count);
+      // You may want to update the cart count in your state or trigger a refresh
+    } catch (error) {
+      console.error('Error fetching cart count:', error);
+    }
+  };
+
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {
     // console.log('Submitting form with values:', values);
     try {
       const response = await authService.login(values);
+      const { user } = response;
       console.log(response);
+      // Set userId in the parent component (Routes.js)
+      setUserId(user._id);
       // Handle successful login, e.g., redirect to dashboard
       // Save login state in session storage
       sessionStorage.setItem('isLoggedIn', 'true');
       // Update the parent component (Route.js) about the successful login
       onLogin();
+      // Fetch and log the cart count after successful login
+      fetchCartCount(user._id);
+      console.log(user._id) 
       setAlertSeverity('success');
       setAlertMessage('Login successful');
       setAlertOpen(true);

@@ -1,16 +1,34 @@
 // components/Navbar.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars, FaTimes, FaSearch, FaUser, FaShoppingCart } from 'react-icons/fa';
-// import { useAuth } from '../contexts/AuthContext';
+import cartService from '../services/cartService';
+import { Badge } from 'antd';
 
-const Navbar = ({ isLoggedIn, onLogout }) => {
+const Navbar = ({ isLoggedIn, onLogout, userId }) => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0)
   // const { isLoggedIn, logout } = useAuth();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
+
+  const fetchCartCount = async (userId) => {
+    try {
+      if (userId) {
+        const cartCountResponse = await cartService.getCartCount(userId);
+        setCartCount(cartCountResponse.count);
+      }
+    } catch (error) {
+      console.error('Error fetching cart count:', error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch cart count when the component mounts or userId changes
+    fetchCartCount(userId);
+  }, [userId]);
 
   return (
     <nav className="bg-gray-800 p-4">
@@ -42,9 +60,11 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
           <Link to="/account" className="text-white">
             Account
           </Link>
-          <Link to="/cart" className="text-white text-lg font-bold">
-            <FaShoppingCart />
-          </Link>
+          <Badge count={cartCount} showZero>
+            <Link to="/cart" className="text-white text-lg font-bold">
+              <FaShoppingCart style={{ fontSize: '24px' }} />
+            </Link>
+          </Badge>
           {isLoggedIn ? (
             <>
               <Link to="/profile" className="text-white">
@@ -81,9 +101,11 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
               <Link to="/account" className="text-white">
                 Account
               </Link>
-              <Link to="/cart" className="text-white text-lg font-bold">
-                <FaShoppingCart />
-              </Link>
+              <Badge count={cartCount} showZero>
+                <Link to="/cart" className="text-white text-lg font-bold">
+                  <FaShoppingCart style={{ fontSize: '24px' }} />
+                </Link>
+              </Badge>
               {/* ... (existing links) */}
               {isLoggedIn ? (
                 <>
