@@ -43,7 +43,7 @@
 
 // ProductList.js
 import React, { useState, useEffect } from 'react';
-import { Card, Col, Row, Button, InputNumber } from 'antd';
+import { Col, Row, } from 'antd';
 import ProductDetail from './ProductDetail';
 import productService from '../services/productService';
 
