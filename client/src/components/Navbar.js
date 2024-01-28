@@ -82,7 +82,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                 Account
               </Link>
               <Link to="/cart" className="text-white text-lg font-bold">
-                <FaShoppingCart className="mb-1" />
+                <FaShoppingCart />
               </Link>
               {/* ... (existing links) */}
               {isLoggedIn ? (
