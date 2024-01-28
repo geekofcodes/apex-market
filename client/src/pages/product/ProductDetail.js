@@ -9,6 +9,7 @@ const ProductDetail = ({ product, userId }) => {
   const handleAddToCart = async () => {
     try {
       await cartService.addToCart(userId, product._id, quantity);
+      console.log("clicked")
       // Fetch and log the updated cart count after adding to cart
         const updatedCartCount = await cartService.getCartCount(userId);
         console.log('Updated Cart Count:', updatedCartCount);

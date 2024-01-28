@@ -51,6 +51,7 @@ const Login = ({ onLogin, setUserId }) => {
       const response = await authService.login(values);
       const { user } = response;
       console.log(response);
+      console.log(user._id)
       // Set userId in the parent component (Routes.js)
       setUserId(user._id);
       // Handle successful login, e.g., redirect to dashboard
