@@ -9,6 +9,9 @@ router.get('/:userId', cartController.getCartByUserId);
 // Add product to cart
 router.post('/:userId', cartController.addToCart);
 
+// Get cart count by user ID
+router.get('/count/:userId', cartController.getCartCount);
+
 // Add other cart routes as needed
 
 module.exports = router;

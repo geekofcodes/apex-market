@@ -48,5 +48,23 @@ module.exports = {
             res.status(500).json({ message: 'Internal Server Error' });
         }
     },
+
+    getCartCount: async (req, res) => {
+        const userId = req.params.userId;
+    
+        try {
+          const cart = await Cart.findOne({ userId });
+    
+          if (cart) {
+            // Calculate the total quantity of products in the cart
+            const cartCount = cart.products.reduce((total, product) => total + product.quantity, 0);
+            res.json({ count: cartCount });
+          } else {
+            res.status(404).json({ message: 'Cart not found' });
+          }
+        } catch (error) {
+          res.status(500).json({ message: 'Internal Server Error' });
+        }
+      },
     // Add other controller methods as needed
 };

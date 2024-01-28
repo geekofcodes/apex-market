@@ -41,6 +41,23 @@ const cartService = {
       throw error;
     }
   },
+
+  getCartCount: async (userId) => {
+    try {
+      const response = await fetch(`${API_URL}/count/${userId}`);
+      if (!response.ok) {
+        throw new Error(`Error fetching cart count: ${response.status} - ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return data.count;
+    } catch (error) {
+      console.error('Error fetching cart count:', error);
+      throw error;
+    }
+  },
+
+  
 };
 
 export default cartService;

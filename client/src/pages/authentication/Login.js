@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import authService from '../../services/authService';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
+import cartService from '../../services/cartService';
 // import { useAuth } from '../../contexts/AuthContext';
 
 const LoginSchema = Yup.object().shape({

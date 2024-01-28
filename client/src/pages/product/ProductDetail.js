@@ -9,7 +9,11 @@ const ProductDetail = ({ product, userId }) => {
   const handleAddToCart = async () => {
     try {
       await cartService.addToCart(userId, product._id, quantity);
+      // Fetch and log the updated cart count after adding to cart
+        const updatedCartCount = await cartService.getCartCount(userId);
+        console.log('Updated Cart Count:', updatedCartCount);
       // You may want to update the cart count in your state or trigger a refresh
+      console.log('added to cart');
     } catch (error) {
       console.error('Error adding product to cart:', error);
     }
