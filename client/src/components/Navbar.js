@@ -1,7 +1,7 @@
 // components/Navbar.js
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBars, FaTimes, FaSearch, FaUser } from 'react-icons/fa';
+import { FaBars, FaTimes, FaSearch, FaUser, FaShoppingCart } from 'react-icons/fa';
 // import { useAuth } from '../contexts/AuthContext';
 
 const Navbar = ({ isLoggedIn, onLogout }) => {
@@ -42,8 +42,8 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
           <Link to="/account" className="text-white">
             Account
           </Link>
-          <Link to="/cart" className="text-white">
-            Cart
+          <Link to="/cart" className="text-white text-lg font-bold">
+            <FaShoppingCart />
           </Link>
           {isLoggedIn ? (
             <>
@@ -74,15 +74,15 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden absolute top-16 left-0 right-0 bg-gray-800">
-            <div className="flex flex-col space-y-4 p-4">
+            <div className="flex flex-col space-y-4 p-4 items-center">
               <Link to="/" className="text-white">
                 Home
               </Link>
               <Link to="/account" className="text-white">
                 Account
               </Link>
-              <Link to="/cart" className="text-white">
-                Cart
+              <Link to="/cart" className="text-white text-lg font-bold">
+                <FaShoppingCart className="mb-1" />
               </Link>
               {/* ... (existing links) */}
               {isLoggedIn ? (
