@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import productService from '../services/productService';
 import FeaturedProducts from '../components/FeaturedProducts';
 import ProductList from './product/ProductList';
-import { Row, Col, Typography } from 'antd';
+import { Typography } from 'antd';
 
 const { Title, Paragraph } = Typography;
 
