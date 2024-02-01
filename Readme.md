@@ -61,3 +61,27 @@ Follow these steps to get a copy of the project up and running on your local mac
    ```bash
    git clone https://github.com/geekofcodes/apex-market.git
    ```
+2. **Install Dependencies:**
+   ```bash
+   # Install frontend dependencies
+   cd apex-market/client
+   npm install
+
+   # Install backend dependencies
+   cd ../server
+   npm install
+   ```
+3. **Set Up MongoDB:**
+    ```
+    Create a MongoDB database and update the connection string in server/.env
+    ```
+4. **Run the Application:**
+    ```bash
+    # Start the backend server
+    cd server
+    node app.js
+    
+    # Start the frontend development server
+    cd ../client
+    npm start
+    ```
