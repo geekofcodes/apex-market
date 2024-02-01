@@ -28,7 +28,7 @@ const Home = ({ userId, setCartCount }) => {
 
             <section className="m-8">
                 <Title level={2}>Featured Products</Title>
-                <FeaturedProducts products={featuredProducts} />
+                {/* <FeaturedProducts products={featuredProducts} /> */}
             </section>
 
             <section className="m-8">
