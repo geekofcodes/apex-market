@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Card, Button, InputNumber } from 'antd';
 import cartService from '../../services/cartService';
 
-const ProductDetail = ({ product, userId }) => {
+const ProductDetail = ({ product, userId, setCartCount }) => {
   const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = async () => {
@@ -12,9 +12,10 @@ const ProductDetail = ({ product, userId }) => {
       await cartService.addToCart(userId, product._id, quantity);
       console.log("clicked")
       // Fetch and log the updated cart count after adding to cart
-        const updatedCartCount = await cartService.getCartCount(userId);
-        console.log('Updated Cart Count:', updatedCartCount);
+      const updatedCartCount = await cartService.getCartCount(userId);
+      console.log('Updated Cart Count:', updatedCartCount);
       // You may want to update the cart count in your state or trigger a refresh
+      setCartCount(updatedCartCount)
       console.log('added to cart');
     } catch (error) {
       console.error('Error adding product to cart:', error);

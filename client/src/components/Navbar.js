@@ -18,7 +18,9 @@ const Navbar = ({ isLoggedIn, onLogout, userId }) => {
     try {
       if (userId) {
         const cartCountResponse = await cartService.getCartCount(userId);
-        setCartCount(cartCountResponse.count);
+        console.log(cartCountResponse)
+        // setCartCount(cartCountResponse);
+        setCartCount(cartCountResponse);
       }
     } catch (error) {
       console.error('Error fetching cart count:', error);
@@ -28,7 +30,13 @@ const Navbar = ({ isLoggedIn, onLogout, userId }) => {
   useEffect(() => {
     // Fetch cart count when the component mounts or userId changes
     fetchCartCount(userId);
+    // console.log('Component re-rendered with cartCount:', cartCount);
   }, [userId]);
+
+  useEffect(() => {
+    // Update the cart count state whenever cartCount changes
+    setCartCount(cartCount);
+  }, [cartCount]);
 
   return (
     <nav className="bg-gray-800 p-4">

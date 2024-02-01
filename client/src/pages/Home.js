@@ -6,11 +6,12 @@ import { Typography } from 'antd';
 
 const { Title, Paragraph } = Typography;
 
-const Home = ({ userId }) => {
+const Home = ({ userId, setCartCount }) => {
     const [featuredProducts, setFeaturedProducts] = useState([]);
 
     useEffect(() => {
         // Fetch products from the server
+        // console.log(userId)
         productService.getProducts()
             .then((data) => setFeaturedProducts(data))
             .catch((error) => console.error('Error fetching products:', error));
@@ -32,7 +33,7 @@ const Home = ({ userId }) => {
 
             <section className="m-8">
                 <Title level={2}>All Products</Title>
-                <ProductList userId={userId} />
+                <ProductList userId={userId} setCartCount={setCartCount} />
             </section>
 
             <section className="m-8">

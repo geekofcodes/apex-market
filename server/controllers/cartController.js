@@ -58,12 +58,12 @@ module.exports = {
           if (cart) {
             // Calculate the total quantity of products in the cart
             const cartCount = cart.products.reduce((total, product) => total + product.quantity, 0);
-            res.json({ count: cartCount });
+            res.json({ message: 'Items found in cart', count: cartCount });
           } else {
             res.status(404).json({ message: 'Cart not found' });
           }
         } catch (error) {
-          res.status(500).json({ message: 'Internal Server Error' });
+          res.status(500).json({ message: 'Internal Server Error', error: error.message });
         }
       },
     // Add other controller methods as needed
