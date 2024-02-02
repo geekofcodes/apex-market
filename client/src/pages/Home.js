@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import productService from '../services/productService';
-import FeaturedProducts from '../components/FeaturedProducts';
 import ProductList from './product/ProductList';
 import { Typography } from 'antd';
 
 const { Title, Paragraph } = Typography;
 
 const Home = ({ userId, setCartCount }) => {
-    const [featuredProducts, setFeaturedProducts] = useState([]);
-
-    useEffect(() => {
-        // Fetch products from the server
-        // console.log(userId)
-        productService.getProducts()
-            .then((data) => setFeaturedProducts(data))
-            .catch((error) => console.error('Error fetching products:', error));
-    }, []);
 
     return (
         <div className="container mx-auto m-6">

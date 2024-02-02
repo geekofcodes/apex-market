@@ -16,7 +16,6 @@ const ProductList = ({ userId, setCartCount }) => {
 
     return (
         <div>
-            <h1>Product List</h1>
             <Row gutter={[16, 16]}>
                 {products.map(product => (
                     <Col key={product._id} xs={24} sm={12} md={8} lg={6}>
