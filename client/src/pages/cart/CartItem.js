@@ -39,6 +39,7 @@ const CartItem = ({ userId }) => {
   }, [userId]);
 
   const handleUpdateQuantity = async (productId, newQuantity) => {
+    console.log(productId)
     try {
       // Update quantity in the cart
       await cartService.updateCartItemQuantity(userId, productId, newQuantity);
