@@ -12,6 +12,12 @@ router.post('/:userId', cartController.addToCart);
 // Get cart count by user ID
 router.get('/count/:userId', cartController.getCartCount);
 
+// Update item quantity in the cart
+router.put('/:userId/updateQuantity', cartController.updateCartItemQuantity);
+
+// Remove item from the cart
+router.delete('/:userId/removeFromCart', cartController.removeFromCart);
+
 // Add other cart routes as needed
 
 module.exports = router;
