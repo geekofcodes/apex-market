@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import cartService from '../../services/cartService';
-import { Card, Button, InputNumber, Typography } from 'antd';
+import { Card, Button, InputNumber, Typography, Row, Col } from 'antd';
 
 const { Text, Title } = Typography;
 
@@ -63,34 +63,37 @@ const CartItem = ({ userId }) => {
 //   };
 
   return (
-    <div>
+    <div className='m-10'>
       <Title level={2}>Shopping Cart</Title>
-      {cartItems.map((item) => (
-        <Card
-          key={item.productId}
-          hoverable
-          style={{ marginBottom: '16px' }}
-          cover={<img alt={item.name} src={item.image} />}
-        >
-          <Card.Meta
-            title={item.name}
-            description={
-              <>
-                <p>Price: ${item.price.toFixed(2)}</p>
-                <label>Quantity:</label>
-                <InputNumber
-                  min={1}
-                  value={item.quantity}
-                //   onChange={(value) => handleUpdateQuantity(item.productId, value)}
-                />
-                {/* <Button type="danger" onClick={() => handleRemoveFromCart(item.productId)}>
-                  Remove from Cart
-                </Button> */}
-              </>
-            }
-          />
-        </Card>
-      ))}
+      <Row gutter={[16, 16]}>
+        {cartItems.map((item) => (
+          <Col key={item.productId} xs={24} sm={12} md={8} lg={6}>
+            <Card
+              hoverable
+              style={{ marginBottom: '16px' }}
+              cover={<img alt={item.name} src={item.image} />}
+            >
+              <Card.Meta
+                title={item.name}
+                description={
+                  <>
+                    <p>Price: ${item.price.toFixed(2)}</p>
+                    <label>Quantity:</label>
+                    <InputNumber
+                      min={1}
+                      value={item.quantity}
+                    //   onChange={(value) => handleUpdateQuantity(item.productId, value)}
+                    />
+                    {/* <Button type="danger" onClick={() => handleRemoveFromCart(item.productId)}>
+                      Remove
+                    </Button> */}
+                  </>
+                }
+              />
+            </Card>
+          </Col>
+        ))}
+      </Row>
       <Text strong>Total Price: ${totalPrice.toFixed(2)}</Text>
     </div>
   );
