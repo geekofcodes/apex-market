@@ -57,6 +57,57 @@ const cartService = {
     }
   },
 
+  // New method to update item quantity in the cart
+  updateCartItemQuantity: async (userId, productId, quantity) => {
+    try {
+      const response = await fetch(`${API_URL}/${userId}/updateQuantity`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productId,
+          quantity,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error updating item quantity: ${response.status} - ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error updating item quantity:', error);
+      throw error;
+    }
+  },
+
+  // New method to remove item from the cart
+  removeFromCart: async (userId, productId) => {
+    try {
+      const response = await fetch(`${API_URL}/${userId}/removeFromCart`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error removing item from cart: ${response.status} - ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
+      throw error;
+    }
+  },
+
   
 };
 
