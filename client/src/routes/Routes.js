@@ -7,6 +7,7 @@ import Login from '../pages/authentication/Login'
 import Signup from '../pages/authentication/Signup'
 import UserProfile from '../pages/user/UserProfile'
 import ProductList from '../pages/product/ProductList'
+import CartItem from '../pages/cart/CartItem'
 
 const Routes = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -55,7 +56,13 @@ const Routes = () => {
         />
         <Route path="/auth/signup" exact component={Signup} />
         <Route path="/profile" exact component={UserProfile} />
-        <Route path="/products" exact render={(props) => <ProductList {...props} userId={userId} />} />
+        <Route 
+          path="/cart" 
+          exact
+          render={(props) => <CartItem {...props} userId={userId} />} 
+          // component={Home} 
+        />
+        {/* <Route path="/products" exact render={(props) => <ProductList {...props} userId={userId} />} /> */}
       </Switch>
       <Footer />
     </HashRouter>
