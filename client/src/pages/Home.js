@@ -10,7 +10,7 @@ const Home = ({ userId, setCartCount }) => {
     return (
         <div className="container mx-auto m-6">
             <section className="text-center">
-                <Title level={1}>Welcome to Our E-Commerce Store</Title>
+                <Title level={1}>Welcome to Apex Market! Our E-Commerce Store for your needs</Title>
                 <Paragraph>
                     Discover the latest and greatest products right here.
                 </Paragraph>
