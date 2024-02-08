@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import productService from '../services/productService';
+import React from 'react';
 import ProductList from './product/ProductList';
 import { Typography } from 'antd';
 
