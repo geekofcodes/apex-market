@@ -56,8 +56,10 @@ const Login = ({ onLogin }) => {
       // Set userId in the parent component (Routes.js)
       // setUserId(user._id);
 
-      // Save userId in sessionStorage
+      // Save userId, name and email in sessionStorage
       sessionStorage.setItem('userId', user._id);
+      sessionStorage.setItem('userName', user.name);
+      sessionStorage.setItem('userEmail', user.email);
       // Handle successful login, e.g., redirect to dashboard
       // Save login state in session storage
       sessionStorage.setItem('isLoggedIn', 'true');
@@ -65,7 +67,7 @@ const Login = ({ onLogin }) => {
       onLogin();
       // Fetch and log the cart count after successful login
       fetchCartCount(user._id);
-      console.log(user._id) 
+      console.log(user._id)
       setAlertSeverity('success');
       setAlertMessage('Login successful');
       setAlertOpen(true);

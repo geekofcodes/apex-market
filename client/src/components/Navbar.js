@@ -87,7 +87,6 @@ const Navbar = ({ isLoggedIn, onLogout, userId }) => {
               Login
             </Link>
           )}
-          
         </div>
 
         {/* Mobile Menu Icon */}
