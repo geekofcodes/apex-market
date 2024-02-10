@@ -43,7 +43,7 @@ const Navbar = ({ isLoggedIn, onLogout, userId }) => {
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <Link to="/" className="text-white text-lg font-bold">
-            ApexMarket
+            Apex Market
           </Link>
         </div>
 
