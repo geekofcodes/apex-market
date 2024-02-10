@@ -9,8 +9,8 @@ const Footer = () => {
   return (
     <footer className="bg-gray-800 text-white py-8">
       <div className="container mx-auto p-4">
-        <div className="flex flex-col md:flex-row items-center md:justify-between">
-          <div className="mb-4 md:mb-0 sm:flex-col sm:items-center">
+        <div className="flex flex-col md:flex-row items-center md:justify-center">
+          <div className="mb-4 md:mb-0 sm:flex-col sm:items-center px-8">
             <h3 className="text-2xl font-bold mb-2">Say Hi</h3>
             <div className="flex space-x-4">
               <a href="www.facebook.com" className="text-gray-300 hover:text-white">
@@ -27,7 +27,7 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          <div className='sm:flex-col sm:items-center'>
+          <div className='sm:flex-col sm:items-center px-8'>
             <h3 className="text-2xl font-bold mb-2">Contact Us</h3>
             <p className="text-gray-300">Email: contact@geekofcodes.com</p>
             <p className="text-gray-300">Phone: 9531876577</p>
