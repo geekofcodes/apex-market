@@ -51,10 +51,8 @@ module.exports = {
 
     getCartCount: async (req, res) => {
         const userId = req.params.userId;
-    
         try {
           const cart = await Cart.findOne({ userId });
-    
           if (cart) {
             // Calculate the total quantity of products in the cart
             const cartCount = cart.products.reduce((total, product) => total + product.quantity, 0);
@@ -70,16 +68,13 @@ module.exports = {
       updateCartItemQuantity: async (req, res) => {
         const userId = req.params.userId;
         const { productId, quantity } = req.body;
-    
         try {
           const cart = await Cart.findOne({ userId });
-    
           if (cart) {
             // Find the product in the cart
             const existingProduct = cart.products.find(
               (product) => product.productId.toString() === productId
             );
-    
             if (existingProduct) {
               // If the product exists, update the quantity
               existingProduct.quantity = quantity;
@@ -95,20 +90,16 @@ module.exports = {
           res.status(500).json({ message: 'Internal Server Error', error: error.message });
         }
       },
-    
       removeFromCart: async (req, res) => {
         const userId = req.params.userId;
         const { productId } = req.body;
-    
         try {
           const cart = await Cart.findOne({ userId });
-    
           if (cart) {
             // Remove the product from the cart
             cart.products = cart.products.filter(
               (product) => product.productId.toString() !== productId
             );
-    
             await cart.save();
             res.json(cart);
           } else {
