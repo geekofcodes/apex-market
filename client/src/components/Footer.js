@@ -30,7 +30,6 @@ const Footer = () => {
           <div className='sm:flex-col sm:items-center px-8'>
             <h3 className="text-2xl font-bold mb-2">Contact Us</h3>
             <p className="text-gray-300">Email: contact@geekofcodes.com</p>
-            <p className="text-gray-300">Phone: 9531876577</p>
           </div>
         </div>
         <div className="mt-8 text-center">
