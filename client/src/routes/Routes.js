@@ -6,14 +6,11 @@ import Footer from '../components/Footer'
 import Login from '../pages/authentication/Login'
 import Signup from '../pages/authentication/Signup'
 import UserProfile from '../pages/user/UserProfile'
-import ProductList from '../pages/product/ProductList'
 import CartItem from '../pages/cart/CartItem'
 
 const Routes = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
-  const [userName, setUserName] = useState(null)
-  const [userEmail, setUserEmail] = useState(null)
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
@@ -38,13 +35,8 @@ const Routes = () => {
     // Remove login state from session storage
     sessionStorage.removeItem('isLoggedIn');
     sessionStorage.removeItem('userId');
-    sessionStorage.removeItem('userName');
-    sessionStorage.removeItem('userEmail');
-
     setLoggedIn(false);
     setUserId(null);
-    setUserName(null)
-    setUserEmail(null)
   };
 
   return (

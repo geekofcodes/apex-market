@@ -1,7 +1,7 @@
 // components/Navbar.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBars, FaTimes, FaSearch, FaUser, FaShoppingCart } from 'react-icons/fa';
+import { FaBars, FaTimes, FaSearch, FaShoppingCart } from 'react-icons/fa';
 import cartService from '../services/cartService';
 import { Badge } from 'antd';
 
