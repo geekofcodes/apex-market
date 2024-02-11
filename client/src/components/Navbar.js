@@ -100,7 +100,7 @@ const Navbar = ({ isLoggedIn, onLogout, userId }) => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-16 left-0 right-0 bg-gray-800">
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-gray-800 z-10">
             <div className="flex flex-col space-y-4 p-4 items-center">
               <Link to="/" className="text-white">
                 Home
