@@ -4,14 +4,18 @@ Welcome to our sophisticated and feature-rich e-commerce website, where modern t
 
 ## Table of Contents
 
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
+- [Awesome E-commerce Website](#awesome-e-commerce-website)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+    - [1. User-friendly Interface](#1-user-friendly-interface)
+    - [2. Responsive Design](#2-responsive-design)
+    - [3. Product Catalog](#3-product-catalog)
+    - [4. Search and Filters](#4-search-and-filters)
+    - [5. Shopping Cart](#5-shopping-cart)
+    - [6. Secure Checkout](#6-secure-checkout)
+    - [7. User Authentication](#7-user-authentication)
+  - [Tech Stack](#tech-stack)
+  - [Getting Started](#getting-started)
 
 ## Features
 
@@ -80,7 +84,7 @@ Follow these steps to get a copy of the project up and running on your local mac
     # Start the backend server
     cd server
     node app.js
-    
+
     # Start the frontend development server
     cd ../client
     npm start
