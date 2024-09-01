@@ -7,6 +7,7 @@ import Login from '../pages/authentication/Login'
 import Signup from '../pages/authentication/Signup'
 import UserProfile from '../pages/user/UserProfile'
 import CartItem from '../pages/cart/CartItem'
+import cartService from '../services/cartService';
 
 const Routes = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -22,8 +23,22 @@ const Routes = () => {
     if (storedLoggedIn === 'true' && storedUserId) {
       setLoggedIn(true);
       setUserId(storedUserId);
+      fetchCartCount(userId)
     }
   }, []);
+
+  const fetchCartCount = async (userId) => {
+    try {
+      if (userId) {
+        const cartCountResponse = await cartService.getCartCount(userId);
+        console.log(cartCountResponse)
+        // setCartCount(cartCountResponse);
+        setCartCount(cartCountResponse);
+      }
+    } catch (error) {
+      console.error('Error fetching cart count:', error);
+    }
+  };
 
   const handleLogin = () => {
     // Save login state in session storage
@@ -58,7 +73,7 @@ const Routes = () => {
         <Route
           path="/cart"
           exact
-          render={(props) => <CartItem {...props} userId={userId} />}
+          render={(props) => <CartItem {...props} userId={userId} setCartCount={setCartCount} />}
           // component={Home}
         />
       </Switch>

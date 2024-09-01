@@ -14,7 +14,7 @@ const SignupSchema = Yup.object().shape({
   email: Yup.string().matches(
     /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     'Invalid email format'
-  ).required('Email is required'),  
+  ).required('Email is required'),
   password: Yup.string()
     .matches(
       /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,}$/,

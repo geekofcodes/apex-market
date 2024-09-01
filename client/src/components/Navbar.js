@@ -1,42 +1,15 @@
 // components/Navbar.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars, FaTimes, FaSearch, FaShoppingCart } from 'react-icons/fa';
-import cartService from '../services/cartService';
 import { Badge } from 'antd';
 
-const Navbar = ({ isLoggedIn, onLogout, userId }) => {
+const Navbar = ({ isLoggedIn, onLogout, cartCount }) => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0)
-  // const { isLoggedIn, logout } = useAuth();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
-
-  const fetchCartCount = async (userId) => {
-    try {
-      if (userId) {
-        const cartCountResponse = await cartService.getCartCount(userId);
-        console.log(cartCountResponse)
-        // setCartCount(cartCountResponse);
-        setCartCount(cartCountResponse);
-      }
-    } catch (error) {
-      console.error('Error fetching cart count:', error);
-    }
-  };
-
-  useEffect(() => {
-    // Fetch cart count when the component mounts or userId changes
-    fetchCartCount(userId);
-    // console.log('Component re-rendered with cartCount:', cartCount);
-  }, [userId]);
-
-  useEffect(() => {
-    // Update the cart count state whenever cartCount changes
-    setCartCount(cartCount);
-  }, [cartCount]);
 
   return (
     <nav className="bg-gray-800 p-4">

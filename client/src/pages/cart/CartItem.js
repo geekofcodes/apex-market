@@ -4,7 +4,7 @@ import { Card, Button, InputNumber, Typography, Row, Col } from 'antd';
 
 const { Text, Title } = Typography;
 
-const CartItem = ({ userId }) => {
+const CartItem = ({ userId, setCartCount }) => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -12,10 +12,11 @@ const CartItem = ({ userId }) => {
     try {
       // Fetch cart items for the user
       const cartData = await cartService.getCartByUserId(userId);
-
+      console.log(cartData)
       // Extract cart items and calculate total price
       const items = cartData.products.map((item) => {
         return {
+          productId: item.productId._id,
           name: item.productId.name,
           quantity: item.quantity,
           price: item.productId.price,
@@ -29,6 +30,7 @@ const CartItem = ({ userId }) => {
 
       setCartItems(items);
       setTotalPrice(total);
+      setCartCount(items.length)
     } catch (error) {
       console.error('Error fetching cart items:', error);
     }
@@ -55,6 +57,7 @@ const CartItem = ({ userId }) => {
     try {
       // Remove item from the cart
       await cartService.removeFromCart(userId, productId);
+      console.log(productId)
 
       // Refresh cart items and total price
       fetchCartItems();
