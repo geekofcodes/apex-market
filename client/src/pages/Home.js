@@ -4,7 +4,7 @@ import { Typography } from 'antd';
 
 const { Title, Paragraph } = Typography;
 
-const Home = ({ userId, setCartCount }) => {
+const Home = ({ userId, setCartCount, searchQuery }) => {
 
     return (
         <div className="container mx-auto m-6">
@@ -22,7 +22,7 @@ const Home = ({ userId, setCartCount }) => {
 
             <section className="m-8">
                 <Title level={2}>All Products</Title>
-                <ProductList userId={userId} setCartCount={setCartCount} />
+                <ProductList userId={userId} setCartCount={setCartCount} searchQuery={searchQuery} />
             </section>
 
             <section className="m-8">

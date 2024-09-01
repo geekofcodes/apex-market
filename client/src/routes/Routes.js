@@ -13,6 +13,7 @@ const Routes = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
   const [cartCount, setCartCount] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     // Check session storage for login state and userId on component mount
@@ -54,14 +55,18 @@ const Routes = () => {
     setUserId(null);
   };
 
+  const handleSearchChange = (query) => {
+    setSearchQuery(query);
+  };
+
   return (
     <HashRouter>
-      <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} userId={userId} cartCount={cartCount} />
+      <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} userId={userId} cartCount={cartCount} onSearchChange={handleSearchChange} />
       <Switch>
         <Route
           path="/"
           exact
-          render={(props) => <Home {...props} userId={userId} setCartCount={setCartCount} />}
+          render={(props) => <Home {...props} userId={userId} setCartCount={setCartCount} searchQuery={searchQuery} />}
           // component={Home}
         />
         <Route

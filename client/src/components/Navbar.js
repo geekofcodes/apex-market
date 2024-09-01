@@ -4,11 +4,15 @@ import { Link } from 'react-router-dom';
 import { FaBars, FaTimes, FaSearch, FaShoppingCart } from 'react-icons/fa';
 import { Badge } from 'antd';
 
-const Navbar = ({ isLoggedIn, onLogout, cartCount }) => {
+const Navbar = ({ isLoggedIn, onLogout, cartCount, onSearchChange }) => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleSearchChange = (e) => {
+    onSearchChange(e.target.value);
   };
 
   return (
@@ -27,6 +31,7 @@ const Navbar = ({ isLoggedIn, onLogout, cartCount }) => {
               type="text"
               placeholder="Search..."
               className="py-1 px-2 w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 transition duration-300"
+              onChange={handleSearchChange}
             />
             <div className="absolute top-0 right-0 h-full flex items-center pr-2 text-gray-500">
               <FaSearch />
