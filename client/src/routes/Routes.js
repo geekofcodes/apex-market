@@ -67,7 +67,6 @@ const Routes = () => {
           path="/"
           exact
           render={(props) => <Home {...props} userId={userId} setCartCount={setCartCount} searchQuery={searchQuery} />}
-          // component={Home}
         />
         <Route
           path="/auth/login"
@@ -79,7 +78,6 @@ const Routes = () => {
           path="/cart"
           exact
           render={(props) => <CartItem {...props} userId={userId} setCartCount={setCartCount} />}
-          // component={Home}
         />
       </Switch>
       <Footer />
