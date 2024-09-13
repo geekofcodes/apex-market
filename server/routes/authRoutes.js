@@ -9,6 +9,9 @@ router.post('/register', authController.register);
 // Login
 router.post('/login', authController.login);
 
+// Refresh Token
+router.post('/refresh-token', authController.refreshToken);
+
 // Add other authentication routes as needed
 
 module.exports = router;
