@@ -1,162 +1,344 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom';
-import { Formik, Form, Field } from 'formik';
-import { TextField, Button, Typography, Link, Grid, Card, CardContent, InputAdornment, Snackbar, Alert } from '@mui/material';
-import * as Yup from 'yup';
-import authService from '../../services/authService';
-import EmailIcon from '@mui/icons-material/Email';
-import LockIcon from '@mui/icons-material/Lock';
-import cartService from '../../services/cartService';
-// import { useAuth } from '../../contexts/AuthContext';
+// Importing necessary components from MUI and other libraries
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import {
+  TextField,
+  Button,
+  Typography,
+  Link,
+  Grid,
+  Card,
+  InputAdornment,
+  Snackbar,
+  Alert,
+  Box,
+  CircularProgress,
+  Switch,
+  FormControlLabel,
+} from "@mui/material";
+import * as Yup from "yup";
+import EmailIcon from "@mui/icons-material/Email";
+import LockIcon from "@mui/icons-material/Lock";
+import { motion } from "framer-motion";
+import authService from "../../services/authService";
+import cartService from "../../services/cartService";
+import logo from "../../assets/images/logos/logo_transparent.png";
 
+// Validation schema
 const LoginSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email format').required('Email is required'),
-  password: Yup.string().required('Password is required'),
+  email: Yup.string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  password: Yup.string().required("Password is required"),
 });
 
 const Login = ({ onLogin }) => {
-  // const { isLoggedIn, login } = useAuth();
   const initialValues = {
-    email: '',
-    password: '',
+    email: "",
+    password: "",
+    rememberMe: false, // Remember me field
   };
 
   const [alertOpen, setAlertOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [alertSeverity, setAlertSeverity] = useState('error');
-  const history = useHistory();
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState("error");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if credentials are stored in localStorage
+    const storedEmail = localStorage.getItem("email");
+    if (storedEmail) {
+      initialValues.email = storedEmail;
+      initialValues.rememberMe = true;
+    }
+  }, []);
 
   const handleAlertClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setAlertOpen(false);
-    setAlertMessage(''); // Clear the alert message when the Snackbar is closed
-    setAlertSeverity('error'); // Reset alert severity to default
+    setAlertMessage("");
+    setAlertSeverity("error");
   };
 
   const fetchCartCount = async (userId) => {
     try {
       const cartCountResponse = await cartService.getCartCount(userId);
-      console.log('Cart Count after login:', cartCountResponse.count);
-      // You may want to update the cart count in your state or trigger a refresh
+      console.log("Cart Count after login:", cartCountResponse.count);
     } catch (error) {
-      console.error('Error fetching cart count:', error);
+      console.error("Error fetching cart count:", error);
     }
   };
 
-  const handleSubmit = async (values, { resetForm, setSubmitting }) => {
-    // console.log('Submitting form with values:', values);
+  const handleSubmit = async (values, { setSubmitting }) => {
+    setIsLoading(true); // Show loader
     try {
       const response = await authService.login(values);
       const { user } = response;
-      console.log(response);
-      console.log(user._id)
 
-      // Set userId in the parent component (Routes.js)
-      // setUserId(user._id);
+      // If "Remember Me" is checked, save email to localStorage
+      if (values.rememberMe) {
+        localStorage.setItem("email", values.email);
+      } else {
+        localStorage.removeItem("email");
+      }
 
-      // Save userId, name and email in sessionStorage
-      sessionStorage.setItem('userId', user._id);
-      sessionStorage.setItem('userName', user.name);
-      sessionStorage.setItem('userEmail', user.email);
-      // Handle successful login, e.g., redirect to dashboard
-      // Save login state in session storage
-      sessionStorage.setItem('isLoggedIn', 'true');
-      // Update the parent component (Route.js) about the successful login
+      sessionStorage.setItem("userId", user._id);
+      sessionStorage.setItem("userName", user.name);
+      sessionStorage.setItem("userEmail", user.email);
+      sessionStorage.setItem("isLoggedIn", "true");
       onLogin();
-      // Fetch and log the cart count after successful login
       fetchCartCount(user._id);
-      console.log(user._id)
-      setAlertSeverity('success');
-      setAlertMessage('Login successful');
+
+      setAlertSeverity("success");
+      setAlertMessage("Login successful");
       setAlertOpen(true);
-      // login();
-      history.push('/'); // Redirect to home page after successful login
+      navigate("/");
     } catch (error) {
       console.error(error.message);
-      // Check if the error is due to validation issues (e.g., wrong email or password)
-      if (error.message) {
-        setAlertMessage(error.message);
-      } else {
-        // Show generic alert for other errors
-        setAlertMessage('An error occurred. Please try again.');
-      }
-      // Show alert on validation error
+      setAlertMessage(error.message || "An error occurred. Please try again.");
       setAlertOpen(true);
     } finally {
+      setIsLoading(false); // Hide loader
       setSubmitting(false);
     }
   };
 
   return (
-    <Grid container justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
-      <Grid item xs={12} sm={10} md={8} lg={6} xl={4}>
-        <Card elevation={3} style={{ padding: '20px' }}>
-          <CardContent>
-            <Typography variant="h5" align="center" gutterBottom>
-              Login
-            </Typography>
-            <Formik initialValues={initialValues} validationSchema={LoginSchema} onSubmit={handleSubmit}>
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      style={{ height: "100vh", background: "#f9fafb", padding: "10px" }}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <Card
+          elevation={3}
+          style={{
+            maxWidth: "400px",
+            padding: "25px",
+            borderRadius: "12px",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          {/* Logo Section */}
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            flexDirection="column"
+            mb={2}
+          >
+            <img
+              src={logo}
+              alt="Logo"
+              style={{ width: "80px", marginBottom: "10px" }}
+            />
+          </Box>
+
+          {/* Title */}
+          <Typography
+            variant="h5"
+            align="center"
+            gutterBottom
+            style={{
+              fontWeight: "bold",
+              color: "#3f51b5",
+              fontFamily: "Poppins",
+              marginBottom: "10px",
+            }}
+          >
+            Login
+          </Typography>
+
+          <Formik
+            initialValues={initialValues}
+            validationSchema={LoginSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ isValid, dirty, isSubmitting, values, setFieldValue }) => (
               <Form>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Field
-                      as={TextField}
-                      name="email"
-                      label="Email"
-                      fullWidth
-                      variant="outlined"
-                      size="small"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <EmailIcon />
-                          </InputAdornment>
-                        ),
-                        inputMode: 'email',
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Field
-                      as={TextField}
-                      name="password"
-                      label="Password"
-                      type="password"
-                      fullWidth
-                      variant="outlined"
-                      size="small"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <LockIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  </Grid>
-                </Grid>
+                <Box display="flex" justifyContent="center" mb={2}>
+                  <Field
+                    as={TextField}
+                    name="email"
+                    label="Email"
+                    size="small"
+                    fullWidth
+                    variant="outlined"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <EmailIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    style={{ width: "100%" }}
+                    helperText={
+                      <ErrorMessage
+                        name="email"
+                        render={(msg) => (
+                          <Typography variant="caption" style={{ color: "red" }}>
+                            {msg}
+                          </Typography>
+                        )}
+                      />
+                    }
+                    required
+                  />
+                </Box>
 
-                <Button type='submit' variant="contained" color="primary" fullWidth style={{ marginTop: '16px' }}>
-                  Login
-                </Button>
+                <Box display="flex" justifyContent="center" mb={3}>
+                  <Field
+                    as={TextField}
+                    name="password"
+                    label="Password"
+                    type="password"
+                    size="small"
+                    fullWidth
+                    variant="outlined"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <LockIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    style={{ width: "100%" }}
+                    helperText={
+                      <ErrorMessage
+                        name="password"
+                        render={(msg) => (
+                          <Typography variant="caption" style={{ color: "red" }}>
+                            {msg}
+                          </Typography>
+                        )}
+                      />
+                    }
+                    required
+                  />
+                </Box>
 
-                <Typography variant="body2" style={{ marginTop: '16px' }}>
-                  Don't have an account? <Link href="#/auth/signup">Sign up</Link>
-                </Typography>
+                {/* Remember Me and Forgot Password in the Same Line */}
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  mb={2}
+                >
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={values.rememberMe}
+                        onChange={(e) => setFieldValue("rememberMe", e.target.checked)}
+                        color="primary"
+                      />
+                    }
+                    label="Remember Me"
+                  />
+                  <Typography variant="body2" align="right" style={{ color: "#6b7280" }}>
+                    <Link
+                      href="#/auth/forgot-password"
+                      style={{
+                        color: "#3f51b5",
+                        fontWeight: "bold",
+                        textDecoration: "none",
+                        fontSize: "14px",
+                        transition: "color 0.3s ease, transform 0.3s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.color = "#ff4081";
+                        e.target.style.transform = "scale(1.05)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.color = "#3f51b5";
+                        e.target.style.transform = "scale(1)";
+                      }}
+                    >
+                      Forgot Password?
+                    </Link>
+                  </Typography>
+                </Box>
+
+                {/* Login Button */}
+                <Box display="flex" justifyContent="center" mb={2}>
+                  <motion.div
+                    whileHover={{ scale: isValid && dirty ? 1.05 : 1 }}
+                    whileTap={{ scale: isValid && dirty ? 0.95 : 1 }}
+                  >
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      disabled={!isValid || !dirty || isSubmitting}
+                      style={{
+                        backgroundColor: !isValid || !dirty
+                          ? "#c5c6d0"
+                          : "#3f51b5",
+                        color: !isValid || !dirty ? "#6b7280" : "#fff",
+                        fontWeight: "bold",
+                        padding: "10px 30px",
+                        borderRadius: "8px",
+                        textTransform: "none",
+                      }}
+                      startIcon={isLoading ? <CircularProgress size={20} /> : null}
+                    >
+                      {isLoading ? "Logging in..." : "Login"}
+                    </Button>
+                  </motion.div>
+                </Box>
+
+                {/* Signup Link */}
+                <Box display="flex" justifyContent="center" mt={2}>
+                  <Typography variant="body2" align="center">
+                    Don't have an account?{" "}
+                    <Link
+                      href="#/auth/signup"
+                      style={{
+                        fontWeight: "bold",
+                        color: "#3f51b5",
+                        textDecoration: "none",
+                        transition: "color 0.3s ease, transform 0.3s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.color = "#ff4081";
+                        e.target.style.transform = "scale(1.05)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.color = "#3f51b5";
+                        e.target.style.transform = "scale(1)";
+                      }}
+                    >
+                      Sign Up
+                    </Link>
+                  </Typography>
+                </Box>
               </Form>
-            </Formik>
-
-            {/* Alert for empty fields */}
-            <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleAlertClose}>
-              <Alert onClose={handleAlertClose} severity={alertSeverity} sx={{ width: '100%' }} variant="filled">
-                {alertMessage}
-              </Alert>
-            </Snackbar>
-          </CardContent>
+            )}
+          </Formik>
         </Card>
-      </Grid>
+      </motion.div>
+
+      {/* Alert Snackbar */}
+      <Snackbar
+        open={alertOpen}
+        autoHideDuration={6000}
+        onClose={handleAlertClose}
+      >
+        <Alert
+          onClose={handleAlertClose}
+          severity={alertSeverity}
+          sx={{ width: "100%" }}
+        >
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </Grid>
   );
 };

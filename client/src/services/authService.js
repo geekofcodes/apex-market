@@ -11,8 +11,6 @@ const authService = {
         body: JSON.stringify(userData),
       });
 
-      console.log(response)
-
       const data = await response.json();
 
       if (!response.ok) {
@@ -62,8 +60,104 @@ const authService = {
       });
 
       const data = await response.json();
+
       if (!response.ok) {
         throw new Error(data.message || 'Token refresh failed');
+      }
+
+      // Update tokens in localStorage
+      localStorage.setItem('accessToken', data.accessToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  verifyEmail: async (verificationCode) => {
+    try {
+      const response = await fetch(`${BASE_URL}/verify-email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code: verificationCode }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Email verification failed');
+      }
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  logout: async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/logout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Logout failed');
+      }
+
+      // Clear tokens from localStorage
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  forgotPassword: async (email) => {
+    try {
+      const response = await fetch(`${BASE_URL}/forgot-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Forgot password failed');
+      }
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  resetPassword: async (token, newPassword) => {
+    try {
+      const response = await fetch(`${BASE_URL}/reset-password/${token}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password: newPassword }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Reset password failed');
       }
 
       return data;
@@ -74,7 +168,7 @@ const authService = {
 
   // Method to include the token in requests
   fetchWithAuth: async (url, options = {}) => {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('accessToken');
     const response = await fetch(url, {
       ...options,
       headers: {
